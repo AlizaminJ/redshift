@@ -1,0 +1,30 @@
+// SQL WORKBENCH CAN SOMETIMES STILL BE LOCKED IN 'HANG' STATUS (SHOWING 'EXECUTING STATEMENT')
+// ALWAYS CHECK REDSHIFT 'LOAD' CONSOLE TO SEE IF A TABLE REALLY LOADED
+
+// CHECK STL_LOAD_COMMITS TABLE TO SEE THE LAST COMMIT:
+select query, trim(filename) as file, curtime as updated
+from stl_load_commits order by updated desc;
+
+// CHECK DATA DISTRIBUTION ON ALL TABLES
+select slice, col, num_values, minvalue, maxvalue
+from svv_diskusage
+where name='customer' and col=0
+order by slice,col;
+
+// LOOK FOR DISK SPILLS
+select query, step, rows, workmem, label, is_diskbased
+from svl_query_summary
+where query = [YOUR-QUERY-ID]
+order by workmem desc;
+
+// CHECK COLUMN, DISTKEY, SORTKEY FOR A GIVEN TABLE
+select "column", type, encoding, distkey, sortkey, "notnull" 
+from pg_table_def
+where tablename = 'lineorder';
+
+// TO LIST ALL TABLES
+SELECT * FROM information_schema.tables;
+
+// TO LIST TABLES IN PUBLIC CHEMA
+SELECT table_name FROM information_schema.tables WHERE table_schema='public'
+
