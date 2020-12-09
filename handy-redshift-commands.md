@@ -1,5 +1,14 @@
 - NOTE: SQL workbench can sometimes be locked in 'hang' status (showing 'executing statement')- Always check redshift 'load' console to see if a table really loaded
 
+- Get columns names:
+```
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Your Table Name'
+ORDER BY ORDINAL_POSITION
+```
+
+
 - Checking duplicate rows:
 ```
 SELECT username, email, COUNT(*)
