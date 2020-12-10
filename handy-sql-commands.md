@@ -11,13 +11,14 @@ ORDER BY ORDINAL_POSITION
 
 - Checking duplicate rows:
 ```
+# https://chartio.com/learn/databases/how-to-find-duplicate-values-in-a-sql-table/
 SELECT username, email, COUNT(*)
 FROM users
 GROUP BY username, email
 HAVING COUNT(*) > 1
 ```
 ```
-# all columns
+# List all rows containing duplicates
 SELECT a.*
 FROM users a
 JOIN (SELECT username, email, COUNT(*)
