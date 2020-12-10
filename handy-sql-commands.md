@@ -69,6 +69,17 @@ SELECT * FROM information_schema.tables;
 SELECT table_name FROM information_schema.tables WHERE table_schema='public'
 ```
 
+### Athena
+- Connection with SQL Workbench:
+```
+# https://s3.amazonaws.com/athena-downloads/drivers/JDBC/SimbaAthenaJDBC_2.0.5/docs/Simba+Athena+JDBC+Driver+Install+and+Configuration+Guide.pdf
+# Building the Connection URL
+
+jdbc:awsathena://AwsRegion=[Region];UID=[AccessKey];PWD=
+[SecretKey];S3OutputLocation=[Output];[Property1]=[Value1];
+[Property2]=[Value2];...
+```
+
 - Create an axternal table in Athena:
 ```
 CREATE TABLE table_name
