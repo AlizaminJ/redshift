@@ -16,6 +16,18 @@ FROM users
 GROUP BY username, email
 HAVING COUNT(*) > 1
 ```
+```
+# all columns
+SELECT a.*
+FROM users a
+JOIN (SELECT username, email, COUNT(*)
+FROM users 
+GROUP BY username, email
+HAVING count(*) > 1 ) b
+ON a.username = b.username
+AND a.email = b.email
+ORDER BY a.email
+```
 
 - Check stl_load_commits table to see the last commit:
 ```
@@ -54,4 +66,19 @@ SELECT * FROM information_schema.tables;
 - To list tables in public schema:
 ```
 SELECT table_name FROM information_schema.tables WHERE table_schema='public'
+```
+
+- Create an axternal table in Athena:
+```
+CREATE TABLE table_name
+[ WITH ( property_name = expression [, ...] ) ]
+AS query
+[ WITH [ NO ] DATA ]
+
+# example
+CREATE TABLE DB_NAME.table_name
+WITH (
+  format='TEXTFILE'
+) AS
+SELECT * FROM select distinct(createdat) from "DB"."layer2sessions";
 ```
